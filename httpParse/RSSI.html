@@ -1,0 +1,700 @@
+
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-cn" lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<link rel="stylesheet" type="text/css" media="screen" href="/luci-static/openwrt.org/cascade.css" />
+<!--[if IE 6]><link rel="stylesheet" type="text/css" media="screen" href="/luci-static/openwrt.org/ie6.css" /><![endif]-->
+<!--[if IE 7]><link rel="stylesheet" type="text/css" media="screen" href="/luci-static/openwrt.org/ie7.css" /><![endif]-->
+<!--[if IE 8]><link rel="stylesheet" type="text/css" media="screen" href="/luci-static/openwrt.org/ie8.css" /><![endif]-->
+<script type="text/javascript" src="/luci-static/resources/xhr.js"></script>
+<title>NHRT - 总览 - LuCI</title>
+</head>
+<body class="lang_zh-cn">
+
+<p class="skiplink">
+<span id="skiplink1"><a href="#navigation">跳转到导航</a></span>
+<span id="skiplink2"><a href="#content">跳到内容</a></span>
+</p>
+
+<div id="menubar">
+<h2 class="navigation"><a id="navigation" name="navigation">导航</a></h2>
+
+<div class="hostinfo">
+	NHRT | Cobra  P015C005B025 |
+	负载: 0.45 0.47 0.21
+	<span id="xhr_poll_status" style="display:none" onclick="XHR.running() ? XHR.halt() : XHR.run()">
+		| 自动刷新:
+		<span id="xhr_poll_status_on">开</span>
+		<span id="xhr_poll_status_off" style="display:none">关</span>
+	</span>
+</div>
+
+
+
+<div id="savemenu">
+	<a href="#">修改数: 0</a>
+	</div>
+
+<div class="clear"></div>
+</div>
+
+<div id="maincontainer">
+	<div id="tabmenu">
+		
+	<div class="tabmenu1">
+	<ul class="tabmenu l1">
+		
+			<li class="tabmenu-item-status active">
+				<a href="/cgi-bin/luci/;stok=d5b2f26bea057631a936bc623259991b/admin/status/">状态</a>
+			</li>
+		
+			<li class="tabmenu-item-system">
+				<a href="/cgi-bin/luci/;stok=d5b2f26bea057631a936bc623259991b/admin/system/">系统</a>
+			</li>
+		
+			<li class="tabmenu-item-services">
+				<a href="/cgi-bin/luci/;stok=d5b2f26bea057631a936bc623259991b/admin/services/">服务</a>
+			</li>
+		
+			<li class="tabmenu-item-network">
+				<a href="/cgi-bin/luci/;stok=d5b2f26bea057631a936bc623259991b/admin/network/">网络</a>
+			</li>
+		
+			<li class="tabmenu-item-logout">
+				<a href="/cgi-bin/luci/;stok=d5b2f26bea057631a936bc623259991b/admin/logout/">退出</a>
+			</li>
+		
+	</ul>
+	<br style="clear:both" />
+
+	<div class="tabmenu2">
+	<ul class="tabmenu l2">
+		
+			<li class="tabmenu-item-overview active">
+				<a href="/cgi-bin/luci/;stok=d5b2f26bea057631a936bc623259991b/admin/status/overview/">总览</a>
+			</li>
+		
+			<li class="tabmenu-item-iptables">
+				<a href="/cgi-bin/luci/;stok=d5b2f26bea057631a936bc623259991b/admin/status/iptables/">防火墙</a>
+			</li>
+		
+			<li class="tabmenu-item-routes">
+				<a href="/cgi-bin/luci/;stok=d5b2f26bea057631a936bc623259991b/admin/status/routes/">路由表</a>
+			</li>
+		
+			<li class="tabmenu-item-syslog">
+				<a href="/cgi-bin/luci/;stok=d5b2f26bea057631a936bc623259991b/admin/status/syslog/">系统日志</a>
+			</li>
+		
+			<li class="tabmenu-item-dmesg">
+				<a href="/cgi-bin/luci/;stok=d5b2f26bea057631a936bc623259991b/admin/status/dmesg/">内核日志</a>
+			</li>
+		
+			<li class="tabmenu-item-modemlog">
+				<a href="/cgi-bin/luci/;stok=d5b2f26bea057631a936bc623259991b/admin/status/modemlog/">Modem日志</a>
+			</li>
+		
+			<li class="tabmenu-item-rules">
+				<a href="/cgi-bin/luci/;stok=d5b2f26bea057631a936bc623259991b/admin/status/rules/">路由规则</a>
+			</li>
+		
+			<li class="tabmenu-item-realtime">
+				<a href="/cgi-bin/luci/;stok=d5b2f26bea057631a936bc623259991b/admin/status/realtime/">实时信息</a>
+			</li>
+		
+	</ul>
+	<br style="clear:both" />
+
+	</div>
+
+	</div>
+
+	</div>
+
+	<div id="maincontent">
+		<noscript>
+			<div class="errorbox">
+				<strong>需要Java Script！</strong><br />
+				LUCI的正常运行需要开启浏览器的Java Script支持。
+			</div>
+		</noscript>
+
+
+<script type="text/javascript" src="/luci-static/resources/cbi.js"></script>
+<script type="text/javascript">//<![CDATA[
+	function progressbar(v, m)
+	{
+		var vn = parseInt(v) || 0;
+		var mn = parseInt(m) || 100;
+		var pc = Math.floor((100 / mn) * vn);
+
+		return String.format(
+			'<div style="width:200px; position:relative; border:1px solid #999999">' +
+				'<div style="background-color:#CCCCCC; width:%d%%; height:15px">' +
+					'<div style="position:absolute; left:0; top:0; text-align:center; width:100%%; color:#000000">' +
+						'<small>%s / %s (%d%%)</small>' +
+					'</div>' +
+				'</div>' +
+			'</div>', pc, v, m, pc
+		);
+	}
+
+	var wifidevs = null;
+	var arptable = null;
+
+	XHR.poll(5, '/cgi-bin/luci/;stok=d5b2f26bea057631a936bc623259991b', { status: 1 },
+		function(x, info)
+		{
+			var si = document.getElementById('wan4_i');
+			var ss = document.getElementById('wan4_s');
+			var ifc = info.wan;
+
+			if (ifc && ifc.ifname )
+			{
+				var s = String.format(
+					'<strong>类型: </strong>%s<br />' +
+					'<strong>地址: </strong>%s<br />' +
+					'<strong>掩码: </strong>%s<br />' +
+					'<strong>网关: </strong>%s<br />',
+						ifc.proto,
+						(ifc.ipaddr) ? ifc.ipaddr : '0.0.0.0',
+						(ifc.netmask && ifc.netmask != ifc.ipaddr) ? ifc.netmask : '255.255.255.255',
+						(ifc.gwaddr) ? ifc.gwaddr : '0.0.0.0'
+				);
+
+				for (var i = 0; i < ifc.dns.length; i++)
+				{
+					s += String.format(
+						'<strong>DNS %d: </strong>%s<br />',
+						i + 1, ifc.dns[i]
+					);
+				}
+
+				if (ifc.expires > -1)
+				{
+					s += String.format(
+						'<strong>到期时间: </strong>%t<br />',
+						ifc.expires
+					);
+				}
+
+				if (ifc.uptime > 0)
+				{
+					s += String.format(
+						'<strong>已连接: </strong>%t<br />',
+						ifc.uptime
+					);
+				}
+
+				ss.innerHTML = String.format('<small>%s</small>', s);
+				si.innerHTML = String.format(
+					'<img src="/luci-static/resources/icons/ethernet.png" />' +
+					'<br /><small><a href="%s">%s</a></small>',
+						ifc.link, ifc.ifname
+				);
+			}
+			else
+			{
+				si.innerHTML = '<img src="/luci-static/resources/icons/ethernet_disabled.png" /><br /><small>?</small>';
+				ss.innerHTML = '<em>未连接</em>';
+			}
+
+			
+			var si6 = document.getElementById('wan6_i');
+			var ss6 = document.getElementById('wan6_s');
+			var ifc6 = info.wan6;
+
+			if (ifc6 && ifc6.ifname )
+			{
+				var s = String.format(
+					'<strong>地址: </strong>%s<br />' +
+					'<strong>网关: </strong>%s<br />',
+						(ifc6.ip6addr) ? ifc6.ip6addr : '::',
+						(ifc6.gw6addr) ? ifc6.gw6addr : '::'
+				);
+
+				for (var i = 0; i < ifc6.dns.length; i++)
+				{
+					s += String.format(
+						'<strong>DNS %d: </strong>%s<br />',
+						i + 1, ifc6.dns[i]
+					);
+				}
+
+				if (ifc6.uptime > 0)
+				{
+					s += String.format(
+						'<strong>已连接: </strong>%t<br />',
+						ifc6.uptime
+					);
+				}
+
+				ss6.innerHTML = String.format('<small>%s</small>', s);
+				si6.innerHTML = String.format(
+					'<img src="/luci-static/resources/icons/ethernet.png" />' +
+					'<br /><small><a href="%s">%s</a></small>',
+						ifc6.link, ifc6.ifname
+				);
+			}
+			else
+			{
+				si6.innerHTML = '<img src="/luci-static/resources/icons/ethernet_disabled.png" /><br /><small>?</small>';
+				ss6.innerHTML = '<em>未连接</em>';
+			}
+			
+
+			
+
+			
+			var ls = document.getElementById('lease_status_table');
+			if (ls)
+			{
+				/* clear all rows */
+				while( ls.rows.length > 1 )
+					ls.rows[0].parentNode.deleteRow(1);
+
+				for( var i = 0; i < info.leases.length; i++ )
+				{
+					var timestr;
+
+					if (info.leases[i].expires <= 0)
+						timestr = '<em>过期时间</em>';
+					else
+						timestr = String.format('%t', info.leases[i].expires);
+
+					var tr = ls.rows[0].parentNode.insertRow(-1);
+						tr.className = 'cbi-section-table-row cbi-rowstyle-' + ((i % 2) + 1);
+
+					tr.insertCell(-1).innerHTML = info.leases[i].hostname ? info.leases[i].hostname : '?';
+					tr.insertCell(-1).innerHTML = info.leases[i].ipaddr;
+					tr.insertCell(-1).innerHTML = info.leases[i].macaddr;
+					tr.insertCell(-1).innerHTML = timestr;
+				}
+
+				if( ls.rows.length == 1 )
+				{
+					var tr = ls.rows[0].parentNode.insertRow(-1);
+						tr.className = 'cbi-section-table-row';
+
+					var td = tr.insertCell(-1);
+						td.colSpan = 4;
+						td.innerHTML = '<em><br />没有已分配的租约。</em>';
+				}
+			}
+
+			var ls6 = document.getElementById('lease6_status_table');
+			if (ls6 && info.leases6)
+			{
+				ls6.parentNode.style.display = 'block';
+
+				/* clear all rows */
+				while( ls6.rows.length > 1 )
+					ls6.rows[0].parentNode.deleteRow(1);
+
+				for( var i = 0; i < info.leases6.length; i++ )
+				{
+					var timestr;
+
+					if (info.leases6[i].expires <= 0)
+						timestr = '<em>过期时间</em>';
+					else
+						timestr = String.format('%t', info.leases6[i].expires);
+
+					var tr = ls6.rows[0].parentNode.insertRow(-1);
+						tr.className = 'cbi-section-table-row cbi-rowstyle-' + ((i % 2) + 1);
+
+					tr.insertCell(-1).innerHTML = info.leases6[i].hostname ? info.leases6[i].hostname : '?';
+					tr.insertCell(-1).innerHTML = info.leases6[i].ip6addr;
+					tr.insertCell(-1).innerHTML = info.leases6[i].duid;
+					tr.insertCell(-1).innerHTML = timestr;
+				}
+
+				if( ls6.rows.length == 1 )
+				{
+					var tr = ls6.rows[0].parentNode.insertRow(-1);
+						tr.className = 'cbi-section-table-row';
+
+					var td = tr.insertCell(-1);
+						td.colSpan = 4;
+						td.innerHTML = '<em><br />没有已分配的租约。</em>';
+				}
+			}
+			
+
+			
+			var assoclist = [ ];
+
+			var ws = document.getElementById('wifi_status_table');
+			if (ws)
+			{
+				var wsbody = ws.rows[0].parentNode;
+				while (ws.rows.length > 0)
+					wsbody.deleteRow(0);
+
+				for (var didx = 0; didx < info.wifinets.length; didx++)
+				{
+					var dev = info.wifinets[didx];
+
+					var tr = wsbody.insertRow(-1);
+					var td;
+
+					td = tr.insertCell(-1);
+					td.width     = "33%";
+					td.innerHTML = dev.name;
+					td.style.verticalAlign = "top";
+
+					td = tr.insertCell(-1);
+
+					var s = '';
+
+					for (var nidx = 0; nidx < dev.networks.length; nidx++)
+					{
+						var net = dev.networks[nidx];
+						var is_assoc = (net.bssid != '00:00:00:00:00:00' && net.channel && !net.disabled);
+
+						var icon;
+						if (!is_assoc)
+							icon = "/luci-static/resources/icons/signal-none.png";
+						else if (net.quality == 0)
+							icon = "/luci-static/resources/icons/signal-0.png";
+						else if (net.quality < 25)
+							icon = "/luci-static/resources/icons/signal-0-25.png";
+						else if (net.quality < 50)
+							icon = "/luci-static/resources/icons/signal-25-50.png";
+						else if (net.quality < 75)
+							icon = "/luci-static/resources/icons/signal-50-75.png";
+						else
+							icon = "/luci-static/resources/icons/signal-75-100.png";
+
+						s += String.format(
+							'<table><tr><td style="text-align:center; width:32px; padding:3px">' +
+								'<img src="%s" title="信号: %d dBm / 噪声: %d dBm" />' +
+								'<br /><small>%d%%</small>' +
+							'</td><td style="text-align:left; padding:3px"><small>' +
+								'<strong>SSID:</strong> <a href="%s">%h</a><br />' +
+								'<strong>模式:</strong> %s<br />' +
+								'<strong>信道:</strong> %d (%.3f GHz)<br />' +
+								'<strong>传输速率:</strong> %s Mbit/s<br />',
+								icon, net.signal, net.noise,
+								net.quality,
+								net.link, net.ssid,
+								net.mode,
+								net.channel, net.frequency,
+								net.bitrate || '?'
+						);
+
+						if (is_assoc)
+						{
+							s += String.format(
+								'<strong>BSSID:</strong> %s<br />' +
+								'<strong>加密:</strong> %s',
+									net.bssid,
+									net.encryption
+							);
+						}
+						else
+						{
+							s += '<em>未开启或未关联无线</em>';
+						}
+
+						s += '</small></td></tr></table>';
+
+						for (var bssid in net.assoclist)
+						{
+							assoclist.push({
+								bssid:    bssid,
+								signal:   net.assoclist[bssid].signal,
+								noise:    net.assoclist[bssid].noise,
+								rx_rate:  net.assoclist[bssid].rx_rate,
+								rx_mcs:   net.assoclist[bssid].rx_mcs,
+								rx_40mhz: net.assoclist[bssid].rx_40mhz,
+								tx_rate:  net.assoclist[bssid].tx_rate,
+								tx_mcs:   net.assoclist[bssid].tx_mcs,
+								tx_40mhz: net.assoclist[bssid].tx_40mhz,
+								link:     net.link,
+								name:     net.name
+							});
+						}
+					}
+
+					if (!s)
+						s = '<em>无可用信息</em>';
+
+					td.innerHTML = s;
+				}
+			}
+
+			var ac = document.getElementById('wifi_assoc_table');
+			if (ac)
+			{
+				/* clear all rows */
+				while( ac.rows.length > 1 )
+					ac.rows[0].parentNode.deleteRow(1);
+
+				assoclist.sort(function(a, b) {
+					return (a.name == b.name)
+						? (a.bssid < b.bssid)
+						: (a.name  > b.name )
+					;
+				});
+
+				for( var i = 0; i < assoclist.length; i++ )
+				{
+					var tr = ac.rows[0].parentNode.insertRow(-1);
+						tr.className = 'cbi-section-table-row cbi-rowstyle-' + (1 + (i % 2));
+
+					var icon;
+					var q = (-1 * (assoclist[i].noise - assoclist[i].signal)) / 5;
+					if (q < 1)
+						icon = "/luci-static/resources/icons/signal-0.png";
+					else if (q < 2)
+						icon = "/luci-static/resources/icons/signal-0-25.png";
+					else if (q < 3)
+						icon = "/luci-static/resources/icons/signal-25-50.png";
+					else if (q < 4)
+						icon = "/luci-static/resources/icons/signal-50-75.png";
+					else
+						icon = "/luci-static/resources/icons/signal-75-100.png";
+
+					tr.insertCell(-1).innerHTML = String.format(
+						'<img src="%s" title="信号: %d dBm / 噪声: %d dBm" />',
+						icon, assoclist[i].signal, assoclist[i].noise
+					);
+
+					tr.insertCell(-1).innerHTML = assoclist[i].bssid;
+
+					tr.insertCell(-1).innerHTML = String.format(
+						'<a href="%s">%s</a>',
+							assoclist[i].link,
+							'%h'.format(assoclist[i].name).nobr()
+					);
+
+					tr.insertCell(-1).innerHTML = String.format('%d dBm', assoclist[i].signal).nobr();
+					tr.insertCell(-1).innerHTML = String.format('%d dBm', assoclist[i].noise).nobr();
+
+					tr.insertCell(-1).innerHTML = (assoclist[i].rx_mcs > -1)
+						? String.format('%.1f Mbit/s, MCS %d, %dMHz', assoclist[i].rx_rate / 1000, assoclist[i].rx_mcs, assoclist[i].rx_40mhz ? 40 : 20).nobr()
+						: String.format('%.1f Mbit/s', assoclist[i].rx_rate / 1000).nobr()
+					;
+
+					tr.insertCell(-1).innerHTML = (assoclist[i].tx_mcs > -1)
+						? String.format('%.1f Mbit/s, MCS %d, %dMHz', assoclist[i].tx_rate / 1000, assoclist[i].tx_mcs, assoclist[i].tx_40mhz ? 40 : 20).nobr()
+						: String.format('%.1f Mbit/s', assoclist[i].tx_rate / 1000).nobr()
+					;
+				}
+
+				if (ac.rows.length == 1)
+				{
+					var tr = ac.rows[0].parentNode.insertRow(-1);
+						tr.className = 'cbi-section-table-row';
+
+					var td = tr.insertCell(-1);
+						td.colSpan = 7;
+						td.innerHTML = '<br /><em>无可用信息</em>';
+				}
+			}
+			
+
+			var e;
+
+			if (e = document.getElementById('localtime'))
+				e.innerHTML = info.localtime;
+
+			if (e = document.getElementById('uptime'))
+				e.innerHTML = String.format('%t', info.uptime);
+
+			if (e = document.getElementById('loadavg'))
+				e.innerHTML = String.format(
+					'%.02f, %.02f, %.02f',
+					info.loadavg[0] / 65535.0,
+					info.loadavg[1] / 65535.0,
+					info.loadavg[2] / 65535.0
+				);
+
+			if (e = document.getElementById('memtotal'))
+				e.innerHTML = progressbar(
+					((info.memory.free + info.memory.buffered) / 1024) + " kB",
+					(info.memory.total / 1024) + " kB"
+				);
+
+			if (e = document.getElementById('memfree'))
+				e.innerHTML = progressbar(
+					(info.memory.free / 1024) + " kB",
+					(info.memory.total / 1024) + " kB"
+				);
+
+			if (e = document.getElementById('membuff'))
+				e.innerHTML = progressbar(
+					(info.memory.buffered / 1024) + " kB",
+					(info.memory.total / 1024) + " kB"
+				);
+
+			if (e = document.getElementById('swaptotal'))
+				e.innerHTML = progressbar(
+					(info.swap.free / 1024) + " kB",
+					(info.swap.total / 1024) + " kB"
+				);
+
+			if (e = document.getElementById('swapfree'))
+				e.innerHTML = progressbar(
+					(info.swap.free / 1024) + " kB",
+					(info.swap.total / 1024) + " kB"
+				);
+
+			if (e = document.getElementById('conns'))
+				e.innerHTML = progressbar(info.conncount, info.connmax);
+
+		}
+	);
+//]]></script>
+
+<h2><a id="content" name="content">状态</a></h2>
+
+<fieldset class="cbi-section">
+	<legend>系统</legend>
+
+	<table width="100%" cellspacing="10">
+		<tr><td width="33%">主机名</td><td>NHRT</td></tr>
+		<tr><td width="33%">主机型号</td><td>NHPT CR5400</td></tr>
+		<tr><td width="33%">固件版本</td><td>
+			 Cobra  P015C005B025
+		</td></tr>
+		<tr><td width="33%">内核版本</td><td>3.18.29</td></tr>
+		<tr><td width="33%">本地时间</td><td id="localtime">-</td></tr>
+		<tr><td width="33%">运行时间</td><td id="uptime">-</td></tr>
+		<tr><td width="33%">平均负载</td><td id="loadavg">-</td></tr>
+	</table>
+</fieldset>
+
+<fieldset class="cbi-section">
+	<legend>内存</legend>
+
+	<table width="100%" cellspacing="10">
+		<tr><td width="33%">可用数</td><td id="memtotal">-</td></tr>
+		<tr><td width="33%">空闲数</td><td id="memfree">-</td></tr>
+		<tr><td width="33%">已缓冲</td><td id="membuff">-</td></tr>
+	</table>
+</fieldset>
+
+
+
+<fieldset class="cbi-section">
+        <legend>4G网络</legend>
+
+        <table width="100%" cellspacing="10">
+		<tr><td width="33%">固件版本</td><td>10.21.3.14.xw_trk_hk_00.05
+</td></tr>
+		<tr><td width="33%">运营商</td><td>46000
+</td></tr>
+		<tr><td width="33%">注册状态</td><td>2,1,11b2,0003,7
+</td></tr>
+		<tr><td width="33%">小区信息</td><td>PLMN ID:46000,cell ID:418,mode:17,band:38,channel:37900,bandwidth:6,TDD UL/DL configuration:2,RSSI:50,RSRP:34 OK
+</td></tr>
+		<tr><td width="33%">RSSI</td><td>-104 dBm</td></tr>
+		<tr><td width="33%">IMSI</td><td>460025111043733 
+</td></tr>
+		<tr><td width="33%">IP</td><td>10.60.114.171
+</td></tr>
+		<tr><td width="33%">专有承载数</td><td>0
+</td></tr>
+        </table>
+</fieldset>
+
+<fieldset class="cbi-section">
+	<legend>网络</legend>
+
+	<table width="100%" cellspacing="10">
+		<tr><td width="33%" style="vertical-align:top">IPv4 WAN状态</td><td>
+			<table><tr>
+				<td id="wan4_i" style="width:16px; text-align:center; padding:3px"><img src="/luci-static/resources/icons/ethernet_disabled.png" /><br /><small>?</small></td>
+				<td id="wan4_s" style="vertical-align:middle; padding: 3px"><em>收集数据：</em></td>
+			</tr></table>
+		</td></tr>
+		
+		<tr><td width="33%" style="vertical-align:top">IPv6 WAN状态</td><td>
+			<table><tr>
+				<td id="wan6_i" style="width:16px; text-align:center; padding:3px"><img src="/luci-static/resources/icons/ethernet_disabled.png" /><br /><small>?</small></td>
+				<td id="wan6_s" style="vertical-align:middle; padding: 3px"><em>收集数据：</em></td>
+			</tr></table>
+		</td></tr>
+		
+		<tr><td width="33%">活动连接</td><td id="conns">-</td></tr>
+	</table>
+</fieldset>
+
+
+<fieldset class="cbi-section">
+	<legend>DHCP分配</legend>
+
+	<table class="cbi-section-table" id="lease_status_table">
+		<tr class="cbi-section-table-titles">
+			<th class="cbi-section-table-cell">主机名</th>
+			<th class="cbi-section-table-cell">IPv4-地址</th>
+			<th class="cbi-section-table-cell">MAC-地址</th>
+			<th class="cbi-section-table-cell">剩余租期</th>
+		</tr>
+		<tr class="cbi-section-table-row">
+			<td colspan="4"><em><br />收集数据：</em></td>
+		</tr>
+	</table>
+</fieldset>
+
+<fieldset class="cbi-section" style="display:none">
+	<legend>DHCPv6分配</legend>
+
+	<table class="cbi-section-table" id="lease6_status_table">
+		<tr class="cbi-section-table-titles">
+			<th class="cbi-section-table-cell">主机名</th>
+			<th class="cbi-section-table-cell">IPv6-地址</th>
+			<th class="cbi-section-table-cell">DUID（DHCP唯一标识符）</th>
+			<th class="cbi-section-table-cell">剩余租期</th>
+		</tr>
+		<tr class="cbi-section-table-row">
+			<td colspan="4"><em><br />收集数据：</em></td>
+		</tr>
+	</table>
+</fieldset>
+
+
+
+
+
+<fieldset class="cbi-section">
+	<legend>无线</legend>
+
+	<table id="wifi_status_table" width="100%" cellspacing="10">
+		<tr><td><em>收集数据：</em></td></tr>
+	</table>
+</fieldset>
+
+<fieldset class="cbi-section">
+	<legend>已连接站点</legend>
+
+	<table class="cbi-section-table" id="wifi_assoc_table">
+		<tr class="cbi-section-table-titles">
+			<th class="cbi-section-table-cell">&#160;</th>
+			<th class="cbi-section-table-cell">MAC-地址</th>
+			<th class="cbi-section-table-cell">网络</th>
+			<th class="cbi-section-table-cell">信号</th>
+			<th class="cbi-section-table-cell">噪声</th>
+			<th class="cbi-section-table-cell">接收速率</th>
+			<th class="cbi-section-table-cell">发送速率</th>
+		</tr>
+		<tr class="cbi-section-table-row">
+			<td colspan="7"><em><br />收集数据：</em></td>
+		</tr>
+	</table>
+</fieldset>
+<div class="clear"></div>
+</div>
+</div>
+
+<p class="luci">
+	>>>>> Cobra  P015C005B025 >>>>>
+</p>
+</body>
+</html>
+
