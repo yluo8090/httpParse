@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A16568221F1F164300543F29 /* getgateway.c in Sources */ = {isa = PBXBuildFile; fileRef = A165681F1F1F164300543F29 /* getgateway.c */; };
 		A17A0FB81F147F71004407BB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A17A0FB71F147F71004407BB /* main.m */; };
 		A17A0FBB1F147F71004407BB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A17A0FBA1F147F71004407BB /* AppDelegate.m */; };
 		A17A0FBE1F147F71004407BB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A17A0FBD1F147F71004407BB /* ViewController.m */; };
@@ -36,6 +37,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A165681F1F1F164300543F29 /* getgateway.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = getgateway.c; sourceTree = "<group>"; };
+		A16568201F1F164300543F29 /* getgateway.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = getgateway.h; sourceTree = "<group>"; };
+		A16568211F1F164300543F29 /* route.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = route.h; sourceTree = "<group>"; };
 		A17A0FB31F147F71004407BB /* httpParse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = httpParse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A17A0FB71F147F71004407BB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A17A0FB91F147F71004407BB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -101,6 +105,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A165681E1F1F164300543F29 /* RouteAddress */ = {
+			isa = PBXGroup;
+			children = (
+				A165681F1F1F164300543F29 /* getgateway.c */,
+				A16568201F1F164300543F29 /* getgateway.h */,
+				A16568211F1F164300543F29 /* route.h */,
+			);
+			path = RouteAddress;
+			sourceTree = "<group>";
+		};
 		A17A0FAA1F147F71004407BB = {
 			isa = PBXGroup;
 			children = (
@@ -121,6 +135,7 @@
 		A17A0FB51F147F71004407BB /* httpParse */ = {
 			isa = PBXGroup;
 			children = (
+				A165681E1F1F164300543F29 /* RouteAddress */,
 				A1ADF8EC1F1E0EB300D829F6 /* AFNetworking */,
 				A17A0FCD1F147F7D004407BB /* Hpple */,
 				A17A0FB91F147F71004407BB /* AppDelegate.h */,
@@ -310,6 +325,7 @@
 				A1ADF9121F1E0EB300D829F6 /* AFSecurityPolicy.m in Sources */,
 				A17A0FBB1F147F71004407BB /* AppDelegate.m in Sources */,
 				A17A0FB81F147F71004407BB /* main.m in Sources */,
+				A16568221F1F164300543F29 /* getgateway.c in Sources */,
 				A1ADF9141F1E0EB300D829F6 /* AFURLResponseSerialization.m in Sources */,
 				A17A0FD51F147F7D004407BB /* TFHpple.m in Sources */,
 				A1ADF91B1F1E0EB300D829F6 /* UIImageView+AFNetworking.m in Sources */,
