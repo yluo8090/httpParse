@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "AFNetworking.h"
 #import "TFHpple.h"
+#import "Reachability.h"
 
 #import <netdb.h>
 #import <net/if.h>
@@ -18,6 +19,13 @@
 #import <netinet/in.h>
 #import <ifaddrs.h>
 #import "getgateway.h"
+
+typedef NS_ENUM(NSUInteger, signalStatus) {
+    signalGood = 1,
+    signalNormal,
+    signalBad,
+    signalUnKnow,
+};
 
 @interface ViewController ()
 
@@ -30,6 +38,12 @@
     [self netWork];
     
     NSLog(@"localAddress:%@",[self getGatewayIpForCurrentWiFi]);
+    NSLog(@"isWifi:%@",[self checkNetworkState] ? @"YES" : @"NO");
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 
@@ -41,11 +55,12 @@
     [manager.securityPolicy setValidatesDomainName:NO];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
+    //@"https://192.168.1.1/cgi-bin/luci?luci_username=root&luci_password=admin"
     [manager GET:@"https://192.168.1.1/cgi-bin/luci?luci_username=root&luci_password=admin" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSString *html = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         if (html) {
-            [self parseHtml:html];
+            [self signalStatus:[self parseHtml:html]];
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -87,6 +102,35 @@
 }
 
 
+//信号强度返回
+- (signalStatus)signalStatus:(NSString *)signal{
+    signalStatus status;
+    NSString *str1 = [signal stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    NSString *str2 = [str1 stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSString *signalStr = [str2 stringByReplacingOccurrencesOfString:@"dBm" withString:@""];
+    
+    NSInteger sig = [signalStr integerValue];
+    
+    if (sig >= -90 && sig <= -41) {
+        status = signalGood;
+    }else if (sig >= -105 && sig < -90 ){
+        status = signalNormal;
+    }else if (sig >= -120 && sig < -105){
+        status = signalBad;
+    }else{
+        status = signalUnKnow;
+    }
+    
+    NSLog(@"subsignal:%lu",(unsigned long)status);
+    
+    return status;
+}
+
+
+
+
+
+#pragma mark - tools
 //获取本地ip
 - (NSString *) localWiFiIPAddress
 {
@@ -137,14 +181,14 @@
                     //                    address = [NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_dstaddr)->sin_addr)];
                     address = [NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr)];
                     /*
-                    //routerIP----192.168.1.255 广播地址
-                    NSLog(@"broadcast address--%@",[NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_dstaddr)->sin_addr)]);
-                    //--192.168.1.106 本机地址
-                    NSLog(@"local device ip--%@",[NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr)]);
-                    //--255.255.255.0 子网掩码地址
-                    NSLog(@"netmask--%@",[NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_netmask)->sin_addr)]);
-                    //--en0 端口地址
-                    NSLog(@"interface--%@",[NSString stringWithUTF8String:temp_addr->ifa_name]);
+                     //routerIP----192.168.1.255 广播地址
+                     NSLog(@"broadcast address--%@",[NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_dstaddr)->sin_addr)]);
+                     //--192.168.1.106 本机地址
+                     NSLog(@"local device ip--%@",[NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr)]);
+                     //--255.255.255.0 子网掩码地址
+                     NSLog(@"netmask--%@",[NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_netmask)->sin_addr)]);
+                     //--en0 端口地址
+                     NSLog(@"interface--%@",[NSString stringWithUTF8String:temp_addr->ifa_name]);
                      */
                 }
             }
@@ -161,10 +205,23 @@
     return ip;
 }
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+//是否连接wifi
+- (BOOL)checkNetworkState{
+    BOOL ret;
+    struct ifaddrs * first_ifaddr, * current_ifaddr;
+    NSMutableArray* activeInterfaceNames = [[NSMutableArray alloc] init];
+    getifaddrs( &first_ifaddr );
+    current_ifaddr = first_ifaddr;
+    while( current_ifaddr!=NULL )
+    {
+        if( current_ifaddr->ifa_addr->sa_family==0x02 )
+        {
+            [activeInterfaceNames addObject:[NSString stringWithFormat:@"%s", current_ifaddr->ifa_name]];
+        }
+        current_ifaddr = current_ifaddr->ifa_next;
+    }
+    ret = [activeInterfaceNames containsObject:@"en0"] || [activeInterfaceNames containsObject:@"en1"];
+    return ret;
 }
 
 

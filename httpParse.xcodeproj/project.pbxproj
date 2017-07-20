@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A16568221F1F164300543F29 /* getgateway.c in Sources */ = {isa = PBXBuildFile; fileRef = A165681F1F1F164300543F29 /* getgateway.c */; };
+		A165682A1F204C0100543F29 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = A16568291F204C0100543F29 /* Reachability.m */; };
+		A165682C1F204D7300543F29 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A165682B1F204D7300543F29 /* SystemConfiguration.framework */; };
 		A17A0FB81F147F71004407BB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A17A0FB71F147F71004407BB /* main.m */; };
 		A17A0FBB1F147F71004407BB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A17A0FBA1F147F71004407BB /* AppDelegate.m */; };
 		A17A0FBE1F147F71004407BB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A17A0FBD1F147F71004407BB /* ViewController.m */; };
@@ -40,6 +42,9 @@
 		A165681F1F1F164300543F29 /* getgateway.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = getgateway.c; sourceTree = "<group>"; };
 		A16568201F1F164300543F29 /* getgateway.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = getgateway.h; sourceTree = "<group>"; };
 		A16568211F1F164300543F29 /* route.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = route.h; sourceTree = "<group>"; };
+		A16568281F204C0100543F29 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		A16568291F204C0100543F29 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		A165682B1F204D7300543F29 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		A17A0FB31F147F71004407BB /* httpParse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = httpParse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A17A0FB71F147F71004407BB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A17A0FB91F147F71004407BB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -98,6 +103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A165682C1F204D7300543F29 /* SystemConfiguration.framework in Frameworks */,
 				A17A0FE71F14A84A004407BB /* libxml2.2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -135,6 +141,8 @@
 		A17A0FB51F147F71004407BB /* httpParse */ = {
 			isa = PBXGroup;
 			children = (
+				A16568281F204C0100543F29 /* Reachability.h */,
+				A16568291F204C0100543F29 /* Reachability.m */,
 				A165681E1F1F164300543F29 /* RouteAddress */,
 				A1ADF8EC1F1E0EB300D829F6 /* AFNetworking */,
 				A17A0FCD1F147F7D004407BB /* Hpple */,
@@ -184,6 +192,7 @@
 		A17A0FDA1F14807F004407BB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A165682B1F204D7300543F29 /* SystemConfiguration.framework */,
 				A17A0FE51F14A75A004407BB /* libxml2.2.dylib */,
 			);
 			name = Frameworks;
@@ -335,6 +344,7 @@
 				A1ADF9131F1E0EB300D829F6 /* AFURLRequestSerialization.m in Sources */,
 				A1ADF9151F1E0EB300D829F6 /* AFURLSessionManager.m in Sources */,
 				A1ADF9171F1E0EB300D829F6 /* AFImageDownloader.m in Sources */,
+				A165682A1F204C0100543F29 /* Reachability.m in Sources */,
 				A1ADF9111F1E0EB300D829F6 /* AFNetworkReachabilityManager.m in Sources */,
 				A1ADF91E1F1E0EB300D829F6 /* UIWebView+AFNetworking.m in Sources */,
 				A17A0FD61F147F7D004407BB /* TFHppleElement.m in Sources */,
